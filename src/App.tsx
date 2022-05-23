@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+
+    const [date, setDate] = useState<Date>(new Date())
+
+    const stringDate = date.toLocaleDateString()
+    const stringTime = date.toLocaleTimeString()
+
+    useEffect(() => {
+        const intervalID = setInterval(() =>
+            setDate(new Date()), 1000)
+        return () => {
+            clearInterval(intervalID)
+        }
+    }, [])
+
+    return (
+        <div className="App">
+            <div className="date">{stringDate}</div>
+            <div className="time">{stringTime}</div>
+        </div>
+    )
 }
 
 export default App;
